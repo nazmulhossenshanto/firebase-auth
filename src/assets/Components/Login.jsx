@@ -1,12 +1,25 @@
-import React from "react";
-import { NavLink } from "react-router";
+import React, { useContext } from "react";
+import { NavLink, useNavigate } from "react-router";
+import { AuthContext } from "../../providers/AuthProviders";
 
 const Login = () => {
+  const {signInUser} = useContext(AuthContext)
+  const navigate = useNavigate()
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+    signInUser(email, password)
+    .then(result=> {
+      console.log(result.user)
+      e.target.reset();
+      navigate('/orders')
+    })
+    .catch(err=>{
+      console.log('sign in ', err)
+    })
+    
   };
   return (
     <div className="mt-10 ">

@@ -3,13 +3,28 @@ import { NavLink } from "react-router";
 import { AuthContext } from "../../providers/AuthProviders";
 
 const Navbar = () => {
-  const {name} = useContext(AuthContext);
-  console.log(name)
-    const links = <>
-    <li><NavLink to="/">Home</NavLink></li>
-    <li><NavLink to="/login">Login</NavLink></li>
-    <li><NavLink to="/register">Register</NavLink></li>
+  const { user, handleLogout } = useContext(AuthContext);
+  console.log(user);
+  const links = (
+    <>
+      <li>
+        <NavLink to="/">Home</NavLink>
+      </li>
+      <li>
+        <NavLink to="/login">Login</NavLink>
+      </li>
+      <li>
+        <NavLink to="/register">Register</NavLink>
+      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to="/orders">Orders</NavLink>
+          </li>
+        </>
+      )}
     </>
+  );
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">
@@ -36,18 +51,18 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-             {links}
+              {links}
             </ul>
           </div>
           <a className="btn btn-ghost text-xl">daisyUI</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {links}
-          </ul>
+          <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn btn-accent ">Button</a>
+
+          <NavLink onClick={handleLogout} className="btn btn-accent ">Sign Out</NavLink>
+          <NavLink className="btn btn-accent ">{user?.email}</NavLink>
         </div>
       </div>
     </div>

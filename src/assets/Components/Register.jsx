@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router";
+
 import { AuthContext } from "../../providers/AuthProviders";
 
 const Register = () => {
@@ -12,6 +13,7 @@ const Register = () => {
     createUser(email, password)
     .then(result =>{
       console.log(result.user)
+      e.target.reset();
     })
     .catch(error=>{
       console.log('Errrrrrr', error)
